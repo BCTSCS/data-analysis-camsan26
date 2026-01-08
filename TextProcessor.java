@@ -30,13 +30,6 @@ public class TextProcessor {
         line = line.replace(stop+" ",""); // beginning 
         line = line.replace(stop+"\n", "\n"); // end
         textList.set(i, line);
-        ArrayList<String> words = FileOperator.getWords(line); 
-        // line.split(" ");
-        for (int j = 0; j < words.size(); j++) {
-          if (words.get(j).equals(stop)) {
-            words.remove(j);
-          }
-        }
       }
     }
   }
