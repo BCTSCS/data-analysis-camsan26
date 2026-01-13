@@ -3,26 +3,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Re {
     public static void main(String[] args) {
-        String re = "[A-Z]{5,}";
-        String text = "ABBBBBBBBBBBBA";
-        // boolean result = text.matches(re);
-        // read posts. txt
-        if (text.matches(re)) {
-            System.out.println("Valid input: " + text);
-        } else {
-            System.out.println("Invalid inpu: " + text);
-        }
-        ArrayList<String> posts = FileOperator.getStringList("/home/codespace/github-classroom/BCTSCS/data-analysis-camsan26/posts.txt");
+        // String re = "#\\d{4}-d{2}-d{4}\\";
+        // String text = "616-33-4565";
         // iterate each post and find #\w
         // for(String post : posts) {
         //     String result = post.matches(re);
         // }
-        Pattern hashtagPattern = Pattern.compile("#\\w+");
+        String re = "\\w\\s";
+        String text = "ABBBBBBBBBBBBA";
+        boolean r = text.matches(re);
+        ArrayList<String> posts = FileOperator.getStringList("/home/codespace/github-classroom/BCTSCS/data-analysis-camsan26/posts.txt");
+        System.out.println(posts);
         for (String post : posts) {
-            Matcher result = hashtagPattern.matcher(post);
-            while (result.find()) {
-                System.out.println("Found hashtag: " + result.group());
-            }
+            boolean result = post.matches(re);
+            System.out.println(result);
         }
         System.out.println(posts);
     }
