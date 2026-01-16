@@ -51,6 +51,6 @@ public class Article {
     }
     @Override
     public String toString() {
-        return "Article [link=" + link + ", headline" + headline + ", category=" + category + ", description= " + description + ", author=" + author + ", date=" + date + "]"; 
+        return "Article [link= " + link + ", headline= " + headline + ", category= " + category + ", description= " + description + ", author= " + author + ", date=" + date + "]"; 
     }
 }
