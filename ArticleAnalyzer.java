@@ -5,23 +5,37 @@ import java.util.regex.Pattern;
 public class ArticleAnalyzer {
     private ArrayList<String> stopWords;
     private ArrayList<Article> articles;
+    private static ArrayList<String> words = new ArrayList<>();
+    private static ArrayList<Double> values = new ArrayList<>();
     public ArticleAnalyzer() {
         stopWords = FileOperator.getStringList("stopwords.txt");
         System.out.println("Stop Word Count: " + stopWords.size());
         articles = new ArrayList<>();
+        words = new ArrayList<>();
+        values = new ArrayList<>();
         System.out.println("Articles Count: " + articles.size());
     }
     public static void main(String[] args) {
         ArticleAnalyzer Camila = new ArticleAnalyzer();
-        ArrayList<String> lines = FileOperator.getStringList("data.txt");
-        for (String line:lines) {
-            // String line = lines.get(0);
-            Article c = Camila.parseJson(line);
-            String clean = Camila.removeStopWords(c.getDescription());
-            System.out.println(c);
-            Camila.addArticle(c);
+        // ArrayList<String> lines = FileOperator.getStringList("data.txt");
+        // for (String line:lines) {
+        //     // String line = lines.get(0);
+        //     Article c = Camila.parseJson(line);
+        //     String clean = Camila.removeStopWords(c.getDescription());
+        //     System.out.println(c);
+        //     Camila.addArticle(c);
+        // }
+        ArrayList<String> sentiments = FileOperator.getStringList("sentiments.txt");
+        for (String sentiment:sentiments) {
+            Pattern l = Pattern.compile("((?i)[A-Za-z0-9]+),(-?\\d+.\\d+)");  //r write regex to extract the word before, and value after
+            Matcher lm =l.matcher(sentiment); //parameter - line of text
+            boolean found = lm.find(); 
+            String word = found ? lm.group(1) : ""; 
+            Double value = found ? Double.parseDouble(lm.group(2)) : 0.0;
+            System.out.println(word+"   ----  "+value);
+            words.add(word);
+            values.add(value);
         }
-
     }
     public void addArticle(Article article) {
         articles.add(article);
