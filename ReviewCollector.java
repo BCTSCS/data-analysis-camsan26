@@ -33,9 +33,15 @@ public class ReviewCollector {
 
     public void addReview(ProductReview prodReview) {
         reviewList.add(prodReview);
-        if (!productList.contains(prodReview.getName())) {
-            productList.add(prodReview.getName());
+        String prodName = prodReview.getName();
+        boolean found = false;
+        for (String name : productList) {
+            found = true;
         }
+        if (!found) {
+            productList.add(prodName);
+        }
+        System.out.println(reviewList.size());
 
     }  
     public int getNumGoodReviews(String prodName) {
@@ -45,8 +51,27 @@ public class ReviewCollector {
         }
     return 0;
     }
-    public static void main(String[] args) {
-        ReviewCollector rc = new ReviewCollector();
-        System.out.println(rc.getNumGoodReviews("productA"));
-    }
+    public static void main(String[] args){
+        ReviewCollector reviewCollector= new ReviewCollector();
+        ArrayList<String> lines =FileOperator.getStringList("product.txt");
+        Pattern productPattern = Pattern.compile("Product:\\s*(.+)");
+        Pattern reviewPattern = Pattern.compile("Review:\\s*(.+)");
+
+        String productName = null;
+        String review =null;
+        for (String line : lines) {
+            Matcher productMatcher = productPattern.matcher(line);
+            Matcher reviewMatcher = reviewPattern.matcher(line);
+
+            if (productMatcher.find()) {
+                productName = productMatcher.group(1);
+            } else if (reviewMatcher.find()) {
+                review= reviewMatcher.group(1);}
+            if(productName!=null &review!=null ){
+                ProductReview product=new ProductReview(productName,review);
+                reviewCollector.addReview(product);
+                System.out.println(product);
+            }
+        }
+}
 }
