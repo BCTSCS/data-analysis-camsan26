@@ -45,11 +45,22 @@ public class ReviewCollector {
 
     }  
     public int getNumGoodReviews(String prodName) {
-        getSentiments("total");
-        for (ProductReview pr : reviewList) {
-            String r = pr.getReview();
+        int goodCount = 0;
+        for (ProductReview elem : reviewList) {
+            if (elem.getName().equals(prodName)) {
+                String review = elem.getReview();
+                String [] words = review.split(" ");
+                double total = 0.0;
+                for (String word : words) {
+                    total=total + getSentiments(word);
+                }
+                if (total > 0) {
+                    goodCount+=1;
+                }
+            }
+
         }
-    return 0;
+        return goodCount;
     }
     public static void main(String[] args){
         ReviewCollector reviewCollector= new ReviewCollector();
